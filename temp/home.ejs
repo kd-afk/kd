@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <style>
+        /* Basic styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Navbar styling */
+        nav {
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+
+        nav a {
+            color: white;
+            margin: 0 15px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        /* To-do list styling */
+        .todo-list {
+            margin: 20px;
+            padding: 20px;
+            background-color: #f4f4f4;
+            border-radius: 5px;
+        }
+
+        .todo-list ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .todo-list li {
+            padding: 10px;
+            background-color: #fff;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        /* Footer styling */
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav>
+        <a href="/home">Home</a>
+        <a href="/users">Users</a>
+        <a href="/login">Login</a>
+        <a href="/signup">Signup</a>
+    </nav>
+
+    <!-- Body: To-do list -->
+    <div class="todo-list">
+        <h2>To-do List</h2>
+        <ul>
+            <% tasks.forEach(task => { %>
+                <li><%= task %></li>
+            <% }) %>
+        </ul>
+
+        <!-- Form to add new task -->
+        <form action="/add-task" method="POST">
+            <input type="text" name="task" placeholder="New task" required>
+            <button type="submit">Add Task</button>
+        </form>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        &copy; 2024 Your Website. All rights reserved.
+    </footer>
+</body>
+</html>

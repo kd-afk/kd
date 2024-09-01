@@ -1,0 +1,35 @@
+<!-- views/signup.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>edit user</title>
+  <link href= "../public/assets/signup.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+  <div class="container">
+    <h2>Edit User Info</h2>
+    <form action="/edit_user" method="POST">
+      <div class="form-group">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+      </div>
+      <div class="form-group">
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+      </div>
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+      </div>
+      <div class="form-group">
+        <button type="submit">Update</button>
+      </div>
+      <div class="form-group">
+        <button type="">cancel</button>
+      </div>
+    </form>
+  </div>
+</body>
+</html>
