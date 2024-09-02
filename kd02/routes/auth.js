@@ -6,6 +6,7 @@ const session = require('express-session');
 const router = express.Router();
 const { sql, poolPromise } = require("../db/db");
 const ensureAuthenticated = require("./authMiddleware");
+const { body, validationResult } = require('express-validator');
 
 
 const secret = crypto.randomBytes(64).toString('hex');
@@ -22,9 +23,21 @@ router.get("/signup", (req, res) => {
 });
 
 // Route to handle signup
-router.post("/signup", async (req, res) => {
+router.post("/signup", [
+  body('fname').notEmpty().withMessage('First name is required'),
+  body('lname').notEmpty().withMessage('Last name is required'),
+  body('username').notEmpty().withMessage('Username is required'),
+  body('email').isEmail().withMessage('Please provide a valid email').notEmpty().withMessage('Email is required'),
+  body('password').isLength({ min: 8 }).withMessage('Password must be at least 8 characters long'),
+  body('mNumber').isLength({ min: 10, max: 10 }).withMessage('Mobile number must be 10 digits').isNumeric().withMessage('Mobile number must contain only numbers'),
+  body('address').notEmpty().withMessage('Address is required')
+] ,async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
   const { username, email, password , fname, lname, mNumber, address} = req.body;
-
+  
   try {
     const hashedPassword = await bcrypt.hash(password, 10);
     const pool = await poolPromise;
@@ -49,14 +62,22 @@ router.get("/login", (req, res) => {
   res.render("login");
 });
 
-router.post("/login",async (req, res) => {
+router.post("/login",[
+  body('emailORusername').notEmpty().withMessage('Username or Email is required'),
+  body('password').notEmpty().withMessage('Password is required')
+],async (req, res) => {
+
+  const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+    
   const { emailORusername, password } = req.body;
   try {
     const pool = await poolPromise;
     const request = pool.request();
 
     request.input("email", sql.NVarChar, emailORusername);
-    request.input("username", sql.NVarChar, emailORusername);
 
     const result = await request.execute("spAuthenticateUser");
 

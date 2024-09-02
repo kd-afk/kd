@@ -6,11 +6,29 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login Form</title>
   <link href= "../public/assets/login.css" rel="stylesheet" type="text/css" />
+  <script>
+    function validateLoginForm() {
+        const emailORusername = document.forms["loginForm"]["emailORusername"].value;
+        const password = document.forms["loginForm"]["password"].value;
+
+        if (emailORusername === "" || password === "") {
+            alert("Both fields are required");
+            return false;
+        }
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(emailORusername) && emailORusername.trim() === '') {
+        errors.push({ msg: 'Please enter a valid username or email' });
+         }
+
+        return true;
+    }
+</script>
 </head>
 <body>
   <div class="container">
     <h2>Login</h2>
-    <form action="/login" method="POST">
+    <form name="loginForm" action="/login" method="POST" onsubmit="return validateLoginForm()">
       <div class="form-group">
         <label for="emailORusername">Email or Username:</label>
         <input type="text" id="emailORusername" name="emailORusername" required>

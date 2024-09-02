@@ -6,14 +6,50 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Signup Form</title>
   <link href= "../public/assets/signup.css" rel="stylesheet" type="text/css" />
+  <script>
+    function validateSignupForm() {
+        const fname = document.forms["signupForm"]["fname"].value;
+        const lname = document.forms["signupForm"]["lname"].value;
+        const username = document.forms["signupForm"]["username"].value;
+        const email = document.forms["signupForm"]["email"].value;
+        const password = document.forms["signupForm"]["password"].value;
+        const mNumber = document.forms["signupForm"]["mNumber"].value;
+        const address = document.forms["signupForm"]["address"].value;
+
+        if (fname === "" || lname === "" || username === "" || email === "" || password === "" || mNumber === "" || address === "") {
+            alert("All fields must be filled out");
+            return false;
+        }
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            alert("Please enter a valid email address");
+            return false;
+        }
+
+        const mobileRegex = /^[0-9]{10}$/;
+        if (!mobileRegex.test(mNumber)) {
+            alert("Please enter a valid 10-digit mobile number");
+            return false;
+        }
+
+        if (password.length < 8) {
+            alert("Password must be at least 8 characters long");
+            return false;
+        }
+
+        return true;
+    }
+</script>
+
 </head>
 <body>
   <div class="container">
     <h2>Signup</h2>
-    <form action="/signup" method="POST">
+    <form name="signupForm" action="/signup" method="POST" onsubmit="return validateSignupForm()">
       <div class="form-group">
         <label for="fname">First name:</label>
-        <input type="text" id="fname" name="fname" required>
+        <input type="text" id="fname" name="fname">
       </div>
       <div class="form-group">
         <label for="lname">Last name:</label>
