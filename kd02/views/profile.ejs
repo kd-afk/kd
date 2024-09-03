@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <link rel="stylesheet" href="../public/assets/profile.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Form validation on submit
+            $("#profileForm").submit(function(event) {
+                const firstName = $.trim($("#firstName").val());
+                const lastName = $.trim($("#lastName").val());
+                const email = $.trim($("#email").val());
+                const mobile = $.trim($("#mobile").val());
+                const address = $.trim($("#address").val());
+    
+                if (firstName === "" || lastName === "" || email === "" || mobile === "" || address === "") {
+                    alert("All fields must be filled out");
+                    event.preventDefault(); // Prevent form submission
+                    return false;
+                }
+    
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(email)) {
+                    alert("Please enter a valid email address");
+                    event.preventDefault(); // Prevent form submission
+                    return false;
+                }
+    
+                const mobileRegex = /^[0-9]{10}$/;
+                if (!mobileRegex.test(mobile)) {
+                    alert("Please enter a valid 10-digit mobile number");
+                    event.preventDefault(); // Prevent form submission
+                    return false;
+                }
+    
+                // If all checks pass, allow the form to be submitted
+                return true;
+            });
+        });
+    </script>
+
+</head>
+<body>
+    <h2>User Profile Update</h2>
+    <form action="/profile" method="POST" enctype="multipart/form-data">
+        <div>
+            <label for="profilePicture">Profile Picture:</label>
+            <% if (user.profilePicture) { %>
+                <img src="/uploads/<%= user.profilePicture %>" alt="Profile Picture" style="width: 100px;">
+            <% } %>
+            <div>
+                <input type="file" name="profilePicture" id="profilePicture">
+                <input type="hidden" name="existingProfilePicture" value="<%= user.profilePicture %>">
+            </div>
+        </div>
+        <div>
+            <label for="firstName">First Name:</label>
+            <input type="text" name="firstName" id="firstName" value="<%= user.fname %>" required>
+        </div>
+        <div>
+            <label for="lastName">Last Name:</label>
+            <input type="text" name="lastName" id="lastName" value="<%= user.lname %>" required>
+        </div>
+        <div>
+            <label for="email">Email:</label>
+            <input type="email" name="email" id="email" value="<%= user.email %>" required>
+        </div>
+        <div>
+            <label for="mobile">Mobile:</label>
+            <input type="text" name="mobile" id="mobile" value="<%= user.mNumber %>" required>
+        </div>
+        <div>
+            <label for="address">Address:</label>
+            <textarea name="address" id="address" required><%= user.address %></textarea>
+        </div>
+        <button type="submit">Update Profile</button>
+    </form>
+</body>
+</html>

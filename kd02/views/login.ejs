@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login Form</title>
   <link href= "../public/assets/login.css" rel="stylesheet" type="text/css" />
-  <script>
+  <!-- <script>
     function validateLoginForm() {
         const emailORusername = document.forms["loginForm"]["emailORusername"].value;
         const password = document.forms["loginForm"]["password"].value;
@@ -23,7 +23,32 @@
 
         return true;
     }
+</script> -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $("#loginForm").submit(function(event) {
+            const emailORusername = $.trim($("#emailORusername").val());
+            const password = $.trim($("#password").val());
+
+            if (emailORusername === "" || password === "") {
+                alert("Both fields are required");
+                event.preventDefault(); // Prevent form submission
+                return false;
+            }
+
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(emailORusername) && emailORusername.indexOf(' ') !== -1) {
+                alert('Please enter a valid username or email');
+                event.preventDefault(); // Prevent form submission
+                return false;
+            }
+
+            return true; // Allow form submission
+        });
+    });
 </script>
+
 </head>
 <body>
   <div class="container">
