@@ -1,5 +1,19 @@
 # kd
 This repo contains my all project.
+To  run these projects you need to install node js 
+Open Powershell as adminstrator and run these command to install node js.
+
+# installs fnm (Fast Node Manager)
+winget install Schniz.fnm
+# configure fnm environment
+fnm env --use-on-cd | Out-String | Invoke-Expression
+# download and install Node.js
+fnm use --install-if-missing 20
+# verifies the right Node.js version is in the environment
+node -v # should print `v20.17.0`
+# verifies the right npm version is in the environment
+npm -v # should print `10.8.2`
+
 This is mssql query for creating users table 
 CREATE TABLE users (
     id INT IDENTITY(1,1) PRIMARY KEY,  -- Auto-incrementing primary key
@@ -15,17 +29,3 @@ CREATE TABLE users (
     tokenExpirationTime DATETIME,
     SignupDate DATETIME DEFAULT GETDATE()  -- Automatically capture signup date
 );
-
-To  run these projects you need to install node js 
-Open Powershell as adminstrator and run these command to install node js.
-
-# installs fnm (Fast Node Manager)
-winget install Schniz.fnm
-# configure fnm environment
-fnm env --use-on-cd | Out-String | Invoke-Expression
-# download and install Node.js
-fnm use --install-if-missing 20
-# verifies the right Node.js version is in the environment
-node -v # should print `v20.17.0`
-# verifies the right npm version is in the environment
-npm -v # should print `10.8.2`
